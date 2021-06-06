@@ -9,10 +9,10 @@ import { loginCredential } from '../model/models';
 })
 export class LoginService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  login(loginDetails: loginCredential):Observable<any> {
-    return this.http.post(`${environment.apiBase}/auth/login`,loginDetails);
+  login(loginDetails: loginCredential): Observable<any> {
+    return this.http.post(`${environment.apiBase}/auth/login`, loginDetails);
   }
 
 }

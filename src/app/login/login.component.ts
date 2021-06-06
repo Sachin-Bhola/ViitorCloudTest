@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
 import { CommonService } from '../services/common.service';
 import { catchError } from 'rxjs/operators';
 import { LocalStorageService } from '../services/local-storage.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,9 +13,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm!: FormGroup;
+  loginSubscription!: Subscription;
 
   constructor(private fb: FormBuilder,
     private loginService: LoginService,
@@ -41,8 +43,11 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+  }
 
-    
+
+  ngOnDestroy() {
+    this.loginSubscription?.unsubscribe();
   }
 
 }
