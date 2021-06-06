@@ -8,15 +8,24 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EmitEventService } from '../emit-event.service';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable()
 export class InterceptorInterceptor implements HttpInterceptor {
 
-  constructor(private eventEmitService: EmitEventService) { }
+  constructor(private eventEmitService: EmitEventService,
+    private localStorageService: LocalStorageService) { }
 
   private requests: HttpRequest<any>[] = [];
 
+
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+
+    const accessToken: any = this.localStorageService.getToken();
+
+    req = req.clone({
+      setParams: { accessToken }
+    });
     this.requests.push(req);
     this.eventEmitService.isLoading.next(true);
     return Observable.create((observer: any) => {
