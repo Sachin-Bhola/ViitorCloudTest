@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+$error: #e55934;
+$success: #3abf94;
+$white: #ffffff;
+
+
+@mixin snackbar($bgcolor) {
+  width: 50vw !important;
+  color: $white;
+  background: $bgcolor;
+  margin: 1em auto !important;
+
+  simple-snack-bar {
+    justify-content: center;
+  }
+}
+
+.snackbar {
+  &-error {
+    @include snackbar($error);
+  }
+
+  &-success {
+    @include snackbar($success);
+  }
+}
